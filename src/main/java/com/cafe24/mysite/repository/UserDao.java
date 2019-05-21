@@ -17,7 +17,7 @@ public class UserDao {
 	private SqlSession sqlSession;
 	
 	public UserVo get(Long no) throws UserDaoException{
-		UserVo userVo = sqlSession.selectOne("getByNo", no);
+		UserVo userVo = sqlSession.selectOne("user.getByNo", no);
 		return userVo;
 	}
 
@@ -39,12 +39,17 @@ public class UserDao {
 	
 	
 	public Boolean update(UserVo userVo) {
-		int count = sqlSession.update("update", userVo);
+		int count = sqlSession.update("user.update", userVo);
 		return 1==count;
 	}
 
 	public Object getUpdtaeInfo(Long no) {
 		return null;
+	}
+
+	public UserVo get(String email) {
+		UserVo userVo = sqlSession.selectOne("user.getByEmail", email);
+		return userVo;
 	}
 
 }

@@ -87,11 +87,17 @@ public class UserController {
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String update(@ModelAttribute UserVo userVo) {
-		if(userService.update(userVo) == false) {
+		boolean result = userService.update(userVo);
+		if(result == false) {
 			return "redirect:/user/update";
 		}
 		
-		return "redirect:/user/login";
+		return "redirect:/user/updatesuccess";
+	}
+	
+	@RequestMapping(value = "/updatesuccess")
+	public String updateSuccess() {
+		return "/user/updatesuccess";
 	}
 	
 //	@ExceptionHandler( UserDaoException.class )

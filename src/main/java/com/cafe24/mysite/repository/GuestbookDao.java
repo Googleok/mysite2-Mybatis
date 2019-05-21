@@ -15,13 +15,13 @@ public class GuestbookDao {
 	private SqlSession sqlSession;
 
 	public Boolean delete(GuestbookVo vo) {
-		int count = sqlSession.delete("delete", vo);
+		int count = sqlSession.delete("guestbook.delete", vo);
 		return 1==count;
 	}
 	
 	public Boolean insert(GuestbookVo vo) {
 		System.out.println(vo);
-		int count = sqlSession.insert("insert", vo);
+		int count = sqlSession.insert("guestbook.insert", vo);
 		System.out.println(vo);
 		return 1==count;
 	}	

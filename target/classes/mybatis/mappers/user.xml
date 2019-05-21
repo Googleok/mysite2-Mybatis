@@ -35,20 +35,37 @@
 	</select>
 	
 	<update id="update" parameterType="uservo">
-		<![CDATA[
-			update 
-				user 
-				set name=#{name}, email=#{email}, password=#{password}, gender=#{gender}, join_date=now()
-				where no=#{no}
-		]]>
+		<if test="name != ''">
+			<![CDATA[
+				update 
+					user 
+					set name=#{name},
+			]]>
+		</if>
+
+		<if test="password != ''">
+			<![CDATA[
+					password=#{password},
+			]]>
+		</if>
+
+		<if test="email != ''">
+			<![CDATA[
+				email=#{email},
+			]]>
+		</if>
+		<if test="gender != ''">
+			<![CDATA[
+				gender=#{gender}
+			]]>
+		</if>
+		where no=#{no}
 	</update>
-<!-- 
-<if test="password != ''">
-	<![CDATA[
-		password=#{password}
+
+	<select id="getByEmail" resultType="uservo" parameterType="string">
+		<![CDATA[
+			select * from user
+			where email = #{email}
 		]]>
-</if>
-
- -->
-
+	</select>
 </mapper>
