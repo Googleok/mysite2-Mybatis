@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StopWatch;
 
 import com.cafe24.mysite.exception.UserDaoException;
 import com.cafe24.mysite.vo.UserVo;
@@ -17,8 +18,7 @@ public class UserDao {
 	private SqlSession sqlSession;
 	
 	public UserVo get(Long no) throws UserDaoException{
-		UserVo userVo = sqlSession.selectOne("user.getByNo", no);
-		return userVo;
+		return sqlSession.selectOne("user.getByNo", no);
 	}
 
 	public UserVo get(UserVo userVo){

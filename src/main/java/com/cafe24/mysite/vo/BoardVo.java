@@ -6,11 +6,12 @@ public class BoardVo {
 	private String title;
 	private String contents;
 	private int hit;
-	private String reg_date;
+	private String regDate;
 	private int groupNo;
 	private int orderNo;
 	private int depth;
 	private Long userNo;
+	private String name;
 	
 	public Long getNo() {
 		return no;
@@ -36,11 +37,11 @@ public class BoardVo {
 	public void setHit(int hit) {
 		this.hit = hit;
 	}
-	public String getReg_date() {
-		return reg_date;
+	public String getRegDate() {
+		return regDate;
 	}
-	public void setReg_date(String reg_date) {
-		this.reg_date = reg_date;
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
 	}
 	public int getGroupNo() {
 		return groupNo;
@@ -66,11 +67,20 @@ public class BoardVo {
 	public void setUserNo(Long userNo) {
 		this.userNo = userNo;
 	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	@Override
 	public String toString() {
-		return "BoardVo [no=" + no + ", title=" + title + ", contents=" + contents + ", hit=" + hit + ", reg_date="
-				+ reg_date + ", groupNo=" + groupNo + ", orderNo=" + orderNo + ", depth=" + depth + ", userNo=" + userNo
-				+ "]";
+		return "BoardVo [no=" + no + ", title=" + title + ", contents=" + contents + ", hit=" + hit + ", regDate="
+				+ regDate + ", groupNo=" + groupNo + ", orderNo=" + orderNo + ", depth=" + depth + ", userNo=" + userNo
+				+ ", name=" + name + "]";
 	}
+
+
+	
 	
 }

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+
+	<insert id="insert" parameterType="boardvo">
+	<![CDATA[
+	insert into board values
+		 (null,
+		#{title},
+        #{contents},
+        0,
+        date_format(now(),'%Y-%m-%d %h:%i:%s'),
+	]]>
+		<choose>
+			<when test="groupNo != 0">
+			<![CDATA[  
+				#{groupNo},
+				(select max(a.order_no)+1 from board a where group_no=#{groupNo}),
+			]]>
+			</when>
+			<when test="groupNo == 0">
+			<![CDATA[  
+		       (select ifnull(max(b.group_no)+1, 1) from board b),		
+		       	1,	
+			]]>
+			</when>
+		</choose>       
+		<choose>
+			<when test="depth != 0">
+			<![CDATA[  
+				#{depth}+1,
+			]]>
+			</when>	
+			<when test="depth == 0">
+			<![CDATA[  
+				0,
+			]]>
+			</when>
+		</choose> 
+	<![CDATA[        
+        #{userNo});
+    ]]>
+	</insert>
+
+	<select id="getList" resultType="boardvo">
+		<![CDATA[    
+		select a.name, b.no, b.title, b.contents, b.hit,
+		 b.reg_date as regDate, b.group_no as groupNo, b.order_no as orderNo, b.depth, b.user_no as userNo
+			 from user a, board b
+				where a.no = b.user_no
+		order by group_no DESC, order_no ASC;
+	    ]]>	
+	</select>
+</mapper>
