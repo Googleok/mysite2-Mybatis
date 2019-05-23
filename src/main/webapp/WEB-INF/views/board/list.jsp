@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
 <%
 	UserVo authUser = (UserVo) session.getAttribute("authUser");
 	Long userNo = 0L;
@@ -25,7 +26,7 @@
 		<c:import url='/WEB-INF/views/includes/header.jsp' />
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="" method="post">
+				<form id="search_form" action="${pageContext.servletContext.contextPath }/board/search" method="post">
 					<input type="text" id="kwd" name="kwd" value=""> <input
 						type="submit" value="찾기">
 				</form>
@@ -38,54 +39,54 @@
 						<th>작성일</th>
 						<th>&nbsp;</th>
 					</tr>
-					<c:set var='count' value='${fn:length(list) }' />
+					<c:set var='count' value='${listCount-(currentPage-1)*10}' />
 					<c:if test="${fn:length(list) > 0}">
 						<c:forEach items='${list }' var='vo' varStatus='status'>
 							<tr>
 								<td>${count-status.index }</td>
 								<!-- 원래는 0대신 vo.depth로 -->
-								<td style="text-align:left; padding-left:${20*0}px">
-									<a href="${pageContext.servletContext.contextPath }/board/view/${vo.no}">
-								 		${vo.title }
-								    </a>
+								<td style="text-align:left; padding-left:${15*vo.depth}px">
+								<c:choose>
+									<c:when test="${vo.status == true }">
+										<a href="${pageContext.servletContext.contextPath }/board/view/${vo.no}">
+									 		<c:if test="${0 ne vo.depth }">
+							                   <img src='${pageContext.servletContext.contextPath }/assets/images/reply.png'>
+							                </c:if>
+									 		${vo.title }
+									    </a>
+									</c:when>
+									<c:when test="${vo.status == false }">
+											<i>
+											${vo.title }											
+											</i>
+									</c:when>
+								</c:choose>
 								</td>
 								<td>${vo.name}</td>
 								<td>${vo.hit}</td>
 								<td>${vo.regDate }</td>
 
 								<c:set var='userNo' value='<%=userNo %>' />
-								<c:if test="${vo.userNo == userNo }">
-									<td><a href="" class="del">삭제</a></td>
+								<c:if test="${vo.userNo == userNo}">
+								<c:if test="${vo.status == true }">
+									<td><a href="${pageContext.servletContext.contextPath }/board/delete/${vo.no}" class="del">삭제</a></td>
+								</c:if>
 								</c:if>
 							</tr>
 						</c:forEach>
 					</c:if>
-					<!-- 
-               <tr>
-                  <td>2</td>
-                  <td>
-                     <img src="${pageContext.servletContext.contextPath }/assets/images/reply.png" alt="" />
-                     <a href="">두 번째 글입니다.</a>
-                  </td>
-                  <td>안대혁</td>
-                  <td>3</td>
-                  <td>2015-10-02 12:04:12</td>
-                  <td><a href="" class="del">삭제</a></td>
-               </tr>
-                -->
-
 				</table>
 
 				<!-- pager 추가 -->
 				<div class="pager">
-					<ul>
-						<li><a href="">◀</a></li>
+					<ul id="pager">
+					<!-- 
 						<li><a href="">1</a></li>
 						<li class="selected">2</li>
 						<li><a href="">3</a></li>
 						<li>4</li>
 						<li>5</li>
-						<li><a href="">▶</a></li>
+					 -->
 					</ul>
 				</div>
 				<!-- pager 추가 -->
@@ -106,5 +107,14 @@
 		</c:import>
 		<c:import url='/WEB-INF/views/includes/footer.jsp' />
 	</div>
+	
 </body>
+	<c:set var='listCount' value='${listCount}'/>
+	<c:set var='currentPage' value='${currentPage}'/>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="${pageContext.servletContext.contextPath }/assets/js/paging.js"></script>
+	<script type="text/javascript">
+		var contextPath ="${pageContext.servletContext.contextPath }";
+		setPage(${listCount}, ${currentPage}, contextPath);
+	</script>
 </html>

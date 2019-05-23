@@ -12,6 +12,8 @@ public class BoardVo {
 	private int depth;
 	private Long userNo;
 	private String name;
+	private String status;
+	private Long parentsNo; // 덧글 쓸 때 부모 번호
 	
 	public Long getNo() {
 		return no;
@@ -73,14 +75,24 @@ public class BoardVo {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public Long getParentsNo() {
+		return parentsNo;
+	}
+	public void setParentsNo(Long parentsNo) {
+		this.parentsNo = parentsNo;
+	}
 	@Override
 	public String toString() {
 		return "BoardVo [no=" + no + ", title=" + title + ", contents=" + contents + ", hit=" + hit + ", regDate="
 				+ regDate + ", groupNo=" + groupNo + ", orderNo=" + orderNo + ", depth=" + depth + ", userNo=" + userNo
-				+ ", name=" + name + "]";
+				+ ", name=" + name + ", status=" + status + ", parentsNo=" + parentsNo + "]";
 	}
-
-
-	
 	
 }
