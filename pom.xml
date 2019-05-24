@@ -163,6 +163,7 @@
 			</dependencies>
 		</profile>
 	</profiles>
+
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<plugins>
