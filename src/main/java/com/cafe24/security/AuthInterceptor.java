@@ -34,7 +34,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 //			auth = ....
 //		}
 	
-		// 5. @Auth가 안 붙어 있는 겨웅
+		// 5. @Auth가 안 붙어 있는 경우
 		if(auth == null) {
 			return true;
 		}

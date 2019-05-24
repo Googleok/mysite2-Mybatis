@@ -47,6 +47,7 @@ http://www.springframework.org/schema/context/spring-context.xsd">
 		</mvc:argument-resolvers>
 	</mvc:annotation-driven>
 
+	<!-- 가상 이미지 폴더를 만들어 줌 -->
  	<!-- the mvc resources url mapping -->
    <mvc:resources mapping="/images/**" location="file:/mysite-uploads/" />
 

@@ -33,6 +33,7 @@ public class AuthUserHandlerMethodArgumentResolver implements HandlerMethodArgum
 		return session.getAttribute("authUser");
 	}
 
+	// 파라미터가 들어가는 것은 다 여기에 걸린다.
 	@Override
 	public boolean supportsParameter(MethodParameter parameter) {
 		// @AuthUser가 안 붙어 있음

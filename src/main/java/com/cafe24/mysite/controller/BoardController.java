@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cafe24.mysite.service.BoardService;
 import com.cafe24.mysite.vo.BoardVo;
+import com.cafe24.mysite.vo.UserVo;
 import com.cafe24.security.Auth;
+import com.cafe24.security.AuthUser;
 
 @Controller
 @RequestMapping("/board")
@@ -43,10 +45,6 @@ public class BoardController {
 			Model model
 	) {
 		
-//		if(session.getAttribute("authUser") == null) {
-//			return "redirect:/user/login";
-//		}
-		
 		if(no != null) {
 			model.addAttribute("parentsNo", no);
 		}
@@ -55,9 +53,9 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String write(@ModelAttribute BoardVo boardVo, HttpSession session) {
+	public String write(@ModelAttribute BoardVo boardVo, @AuthUser UserVo authUser) {
 		
-		boolean result = boardService.write(boardVo, session.getAttribute("authUser"));
+		boolean result = boardService.write(boardVo, authUser);
 		if (result) {
 			System.out.println("insert: success");
 		}
@@ -71,21 +69,17 @@ public class BoardController {
 		return "/board/view";
 	}
 
+	@Auth(role=Auth.Role.USER)	// 인증 annotation
 	@RequestMapping(value = "/delete/{no}", method = RequestMethod.GET)
-	public String delete(@PathVariable(value="no")Long no, Model model, HttpSession session) {
-		if(session.getAttribute("authUser") == null) {
-			return "redirect:/user/login";
-		}
+	public String delete(@PathVariable(value="no")Long no, Model model) {
 		Boolean result = boardService.delete(no);
 		model.addAttribute("deleteResult", result);
 		return "redirect:/board/list";
 	}
 
+	@Auth(role=Auth.Role.USER)	// 인증 annotation
 	@RequestMapping(value = "/modify/{no}", method = RequestMethod.GET)
-	public String modify(@PathVariable(value="no")Long no, Model model, HttpSession session) {
-		if(session.getAttribute("authUser") == null) {
-			return "redirect:/user/login";
-		}
+	public String modify(@PathVariable(value="no")Long no, Model model) {
 		BoardVo vo = boardService.getOne(no);
 		model.addAttribute("oneVo", vo);
 		return "/board/modify";
